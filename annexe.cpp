@@ -1,6 +1,6 @@
 /*
  -----------------------------------------------------------------------------------
- Nom du fichier  : Annexe.cpp
+ Nom du fichier  : annexe.cpp
  Nom du labo     : Labo 08 : Survivor
  Auteur(s)       : Bouattit Nikola & Slimani Walid
  Date creation   : 14.01.2022
@@ -20,7 +20,7 @@
 #include <iostream> // Permet d'afficher et de lire dans la console
 #include <limits>   // Permet d'avoir les caractéristiques des types arithmétiques.
 
-#include "Annexe.h" // Fonctions annexes au programme
+#include "annexe.h" // Fonctions annexes au programme
 
 using namespace std;
 
@@ -28,6 +28,7 @@ void viderBuffer()
 {
    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
+
 //---------------------------------------------------------------------------
 
 int genereChiffreAleatoire(int min, int max)
@@ -44,3 +45,12 @@ int genereChiffreAleatoire(int min, int max)
    // Génération du caractère
    return rand() % (max - min) + min;
 }
+
+//---------------------------------------------------------------------------
+
+void terminerProgramme(const string& msgFinProgramme)
+{
+   cout << msgFinProgramme;
+   viderBuffer();
+}
+//---------------------------------------------------------------------------

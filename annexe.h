@@ -1,6 +1,6 @@
 /*
  -----------------------------------------------------------------------------------
- Nom du fichier  : Annexe.h
+ Nom du fichier  : annexe.h
  Nom du labo     : Labo 08 : Survivor
  Auteur(s)       : Bouattit Nikola & Slimani Walid
  Date creation   : 14.01.2022
@@ -21,6 +21,8 @@
 #ifndef ANNEXE_H
 #define ANNEXE_H
 
+#include <string> // Permet l'utilisation de strings
+
 // Nom       : viderBuffer
 // But       : Cette fonction permet de vider le buffer.
 // Param     : / aucun paramètre
@@ -37,6 +39,15 @@ void viderBuffer();
 // Return    : / void
 // Exception : / aucune exception
 int genereChiffreAleatoire(int min, int max);
+//---------------------------------------------------------------------------
+
+// Nom              : terminerProgramme
+// But              : Affiche le message de fin et attend une confirmation de
+//                    l'utilisateur
+// Param messageFin : Message de fin de programme
+// Return           : / void
+// Exception        : n/a
+void terminerProgramme(const std::string& msgFinProgramme);
 //---------------------------------------------------------------------------
 
 #endif //ANNEXE_H

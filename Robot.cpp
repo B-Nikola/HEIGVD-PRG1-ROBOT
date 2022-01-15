@@ -46,31 +46,57 @@ Robot::~Robot()
 //---------------------------------------------------------------
 // Méthode
 //---------------------------------------------------------------
-void Robot::deplacer()
+void Robot::deplacer(Deplacement direction)
 {
-   Deplacement deplacement;
 
-   switch (deplacement)
+   switch (direction)
    {
 
       case HAUT:
       {
+         y -= 1;
          break;
       }
 
       case BAS:
       {
+         y += 1;
          break;
       }
 
       case GAUCHE:
       {
+         x -= 1;
          break;
       }
 
       case DROITE:
       {
+         x += 1;
          break;
       }
    }
 }
+
+//---------------------------------------------------------------------------
+
+unsigned int Robot::getAbscisse() const
+{
+   return x;
+}
+
+//---------------------------------------------------------------------------
+
+unsigned int Robot::getOrdonnee() const
+{
+   return y;
+}
+
+//---------------------------------------------------------------------------
+
+unsigned int Robot::getId() const
+{
+   return id;
+}
+
+//---------------------------------------------------------------------------
