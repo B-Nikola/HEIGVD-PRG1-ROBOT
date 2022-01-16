@@ -40,8 +40,8 @@ private :
 //---------------------------------------------------------------
 // Paramètre privée
 //---------------------------------------------------------------
-unsigned largeur;
-unsigned hauteur;
+const unsigned largeur;
+const unsigned hauteur;
 
 };
 

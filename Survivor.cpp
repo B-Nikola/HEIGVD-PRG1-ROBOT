@@ -54,7 +54,7 @@ const int NBR_ROBOT_MIN = 1,
 //---------------------------------------------------------------
 Survivor::Survivor()
 {
-   InitialisationPartie();
+   initialisationPartie();
 }
 
 //---------------------------------------------------------------
@@ -65,7 +65,24 @@ Survivor::~Survivor() {}
 //---------------------------------------------------------------
 // Méthode public
 //---------------------------------------------------------------
-void Survivor::ExplicationJeu()
+
+//---------------------------------------------------------------------------
+
+//---------------------------------------------------------------
+// Méthode privée
+//---------------------------------------------------------------
+void Survivor::initialisationPartie()
+{
+   // Création du plateau de jeu
+   Plateau plateauSurvivor = creationPlateau();
+
+   // Création des robots qui vont jouer la partie
+   creationRobots();
+}
+
+//---------------------------------------------------------------------------
+
+void Survivor::explicationJeu()
 {
    cout << endl   // Permet plus de lisibilité dans la console
         << TITRE       << endl
@@ -75,7 +92,7 @@ void Survivor::ExplicationJeu()
 
 //---------------------------------------------------------------------------
 
-void Survivor::InitialisationPartie()
+Plateau &Survivor::creationPlateau()
 {
    // Saisie utilisateur permettant de définir la largeur du plateau
    unsigned largeur = saisieUniqueControlee(LARG_HAUT_MIN,      LARG_HAUT_MAX,
@@ -86,8 +103,14 @@ void Survivor::InitialisationPartie()
                                             MSG_SAISIE_HAUTEUR,MSG_ERREUR);
 
    // Création du plateau de jeu
-   Plateau p1(largeur, hauteur);
+   Plateau plateauJeu(largeur, hauteur);
+   return plateauJeu;
+}
 
+//---------------------------------------------------------------------------
+
+void Survivor::creationRobots()
+{
    // Saisie utilisateur permettant de définir le nombre robots joueueurs
    unsigned nbrRobots = saisieUniqueControlee(NBR_ROBOT_MIN,       NBR_ROBOT_MAX,
                                               MSG_SAISIE_N_ROBOT, MSG_ERREUR);
@@ -110,9 +133,6 @@ void Survivor::InitialisationPartie()
 
 //---------------------------------------------------------------------------
 
-//---------------------------------------------------------------
-// Méthode privée
-//---------------------------------------------------------------
 bool Survivor::estCoordonneeLibre(unsigned int x, unsigned int y) const
 {
    for(const Robot& r : robotsJoueurs)
