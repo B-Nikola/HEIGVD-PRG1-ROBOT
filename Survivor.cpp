@@ -92,14 +92,24 @@ void Survivor::InitialisationPartie()
    unsigned nbrRobots = saisieUniqueControlee(NBR_ROBOT_MIN,       NBR_ROBOT_MAX,
                                               MSG_SAISIE_N_ROBOT, MSG_ERREUR);
 
-   // Création des robots
+   // Création des robots et initialisation des robots
    for(size_t i = 0; i < nbrRobots; ++i)
    {
+      robotsJoueurs.emplace_back(Robot(genereChiffreAleatoire(LARG_HAUT_MIN,
+                                                                 LARG_HAUT_MAX),
+                                       genereChiffreAleatoire(LARG_HAUT_MIN,
+                                                                 LARG_HAUT_MAX)));
 
+      if(robotsJoueurs[i].getAbscisse() == robotsJoueurs[i - 1].getAbscisse())
+      {
+         if (robotsJoueurs[i].getOrdonnee() == robotsJoueurs[i - 1].getOrdonnee())
+         {
 
+         }
+      }
+
+      // A REVOIR
 
    }
-
-
 
 }

@@ -68,7 +68,7 @@ void InitialisationPartie();
 //---------------------------------------------------------------
 // Paramètre privée
 //---------------------------------------------------------------
-std::vector<Robot> RobotsJoueurs;
+std::vector<Robot> robotsJoueurs;
 
 
 private :
