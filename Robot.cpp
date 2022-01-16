@@ -21,6 +21,11 @@
 using namespace std;
 
 //---------------------------------------------------------------
+// Déclaration des constantes
+//---------------------------------------------------------------
+const int UNITE = 1; // Indique de combien d'unité se déplace un robot
+
+//---------------------------------------------------------------
 // Paramètre static
 //---------------------------------------------------------------
 unsigned Robot::next  = 1;
@@ -54,25 +59,25 @@ void Robot::deplacer(Deplacement direction)
 
       case HAUT:
       {
-         y -= 1;
+         y -= UNITE;
          break;
       }
 
       case BAS:
       {
-         y += 1;
+         y += UNITE;
          break;
       }
 
       case GAUCHE:
       {
-         x -= 1;
+         x -= UNITE;
          break;
       }
 
       case DROITE:
       {
-         x += 1;
+         x += UNITE;
          break;
       }
    }

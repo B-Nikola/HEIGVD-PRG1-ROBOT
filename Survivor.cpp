@@ -63,7 +63,7 @@ Survivor::Survivor()
 Survivor::~Survivor() {}
 
 //---------------------------------------------------------------
-// Méthode
+// Méthode public
 //---------------------------------------------------------------
 void Survivor::ExplicationJeu()
 {
@@ -95,21 +95,32 @@ void Survivor::InitialisationPartie()
    // Création des robots et initialisation des robots
    for(size_t i = 0; i < nbrRobots; ++i)
    {
-      robotsJoueurs.emplace_back(Robot(genereChiffreAleatoire(LARG_HAUT_MIN,
-                                                                 LARG_HAUT_MAX),
-                                       genereChiffreAleatoire(LARG_HAUT_MIN,
-                                                                 LARG_HAUT_MAX)));
+      unsigned x = genereChiffreAleatoire(LARG_HAUT_MIN,LARG_HAUT_MAX);
+      unsigned y = genereChiffreAleatoire(LARG_HAUT_MIN,LARG_HAUT_MAX);
 
-      if(robotsJoueurs[i].getAbscisse() == robotsJoueurs[i - 1].getAbscisse())
+      while(!estCoordonneeLibre(x, y))
       {
-         if (robotsJoueurs[i].getOrdonnee() == robotsJoueurs[i - 1].getOrdonnee())
-         {
-
-         }
+         x = genereChiffreAleatoire(LARG_HAUT_MIN,LARG_HAUT_MAX);
+         y = genereChiffreAleatoire(LARG_HAUT_MIN,LARG_HAUT_MAX);
       }
 
-      // A REVOIR
-
+      robotsJoueurs.emplace_back(Robot(x, y));
    }
+}
 
+//---------------------------------------------------------------------------
+
+//---------------------------------------------------------------
+// Méthode privée
+//---------------------------------------------------------------
+bool Survivor::estCoordonneeLibre(unsigned int x, unsigned int y) const
+{
+   for(const Robot& r : robotsJoueurs)
+   {
+      if(r.getOrdonnee() == x && r.getAbscisse() == y)
+      {
+         return false;
+      }
+   }
+   return true;
 }
