@@ -128,7 +128,7 @@ bool erreurSaisieMultiples()
 
 void afficherMessageSaisie(const string& msgSaisie, int borneInf, int borneSup)
 {
-   cout << msgSaisie<< " [" << borneInf << ".." << borneSup << "] : ";
+   cout << msgSaisie<< " [" << borneInf << ".." << borneSup << "] :";
 }
 
 //---------------------------------------------------------------------------

@@ -36,8 +36,7 @@ const string TITRE              = "Survivor",
                                   " detruire les autres robots. Le dernier gagne.",
              MSG_SAISIE_LARGEUR = "Veuillez saisir la largeur du plateau",
              MSG_SAISIE_HAUTEUR = "Veuillez saisir la hauteur du plateau",
-             MSG_SAISIE_N_ROBOT = "Veuillez saisir le nombre de robots qui vont "
-                                  "jouer la partie",
+             MSG_SAISIE_N_ROBOT = "Veuillez saisir le nombre de robots",
              MSG_ERREUR         = "Erreur de saisie...",
              MSG_FIN_PROGRAMME  = "Appuyez sur ENTREE pour quitter le programme.";
 
@@ -48,7 +47,7 @@ const int NBR_ROBOT_MIN   = 1,
           NBR_ROBOT_MAX   = 9,
           LARG_HAUT_MIN   = 10,
           LARG_HAUT_MAX   = 1000,
-          ORIGINE_PLATEAU = 1;
+          ORIGINE_PLATEAU = 0;
 
 //---------------------------------------------------------------
 // Constructeur
@@ -118,6 +117,9 @@ Plateau Survivor::creationPlateau()
 
 void Survivor::creationRobots(const Plateau& plateau)
 {
+   // Déclaration d'une constante
+   const unsigned BORD = 1;
+
    // Saisie utilisateur permettant de définir le nombre robots joueueurs
    unsigned nbrRobots = saisieUniqueControlee(NBR_ROBOT_MIN,       NBR_ROBOT_MAX,
                                               MSG_SAISIE_N_ROBOT, MSG_ERREUR);
@@ -125,13 +127,19 @@ void Survivor::creationRobots(const Plateau& plateau)
    // Création des robots et initialisation des robots
    for(size_t i = 0; i < nbrRobots; ++i)
    {
-      unsigned x = genereChiffreAleatoire(ORIGINE_PLATEAU,plateau.getLargeur());
-      unsigned y = genereChiffreAleatoire(ORIGINE_PLATEAU,plateau.getHauteur());
+      unsigned x = genereChiffreAleatoire(ORIGINE_PLATEAU,
+                                          plateau.getLargeur() - BORD);
+
+      unsigned y = genereChiffreAleatoire(ORIGINE_PLATEAU,
+                                          plateau.getHauteur() - BORD);
 
       while(!estCoordonneeLibre(x, y))
       {
-         x = genereChiffreAleatoire(LARG_HAUT_MIN,LARG_HAUT_MAX);
-         y = genereChiffreAleatoire(LARG_HAUT_MIN,LARG_HAUT_MAX);
+         x = genereChiffreAleatoire(ORIGINE_PLATEAU,
+                                    plateau.getLargeur() - BORD);
+
+         y = genereChiffreAleatoire(ORIGINE_PLATEAU,
+                                    plateau.getHauteur() - BORD);
       }
 
       robotsJoueurs.emplace_back(Robot(x, y));
@@ -140,11 +148,11 @@ void Survivor::creationRobots(const Plateau& plateau)
 
 //---------------------------------------------------------------------------
 
-bool Survivor::estCoordonneeLibre(unsigned int x, unsigned int y) const
+bool Survivor::estCoordonneeLibre(unsigned  x, unsigned  y) const
 {
    for(const Robot& r : robotsJoueurs)
    {
-      if(r.getOrdonnee() == x && r.getAbscisse() == y)
+      if(r.getOrdonnee() == y && r.getAbscisse() == x)
       {
          return false;
       }
@@ -156,22 +164,61 @@ bool Survivor::estCoordonneeLibre(unsigned int x, unsigned int y) const
 
 void Survivor::affichage(const Plateau& plateau)
 {
-   string ligne0(plateau.getLargeur()+2,'-');
-   cout << ligne0 << endl;
+   // Déclaration de constantes
+   const int           DEPART_AFFICHAGE = '0'; // Permet d'afficher l'ID
+   const unsigned char MUR_HORIZONTAL   = '-'; // Bordure supéreiure et inféreieure
+   const unsigned char MUR_VERTICAL     = '|'; // Bordure latérale
+   const unsigned char ESPACE_VIDE      = ' '; // Affiche un espace vide (pas de
+                                               // robots)
+   const unsigned      DECALAGE_MUR     = 2;   // Permet d'avoir des murs
+                                               // perpendiculaires
 
-   for (size_t i = 0; i < plateau.getHauteur(); ++i) {
-      string ligneX = "|";
-      ligneX += string(plateau.getLargeur(),' ');
+   // Permet d'afficher le terrain sans les robots
+   string bordureHorizontale(plateau.getLargeur() + DECALAGE_MUR,MUR_HORIZONTAL);
+   cout << bordureHorizontale << endl;
 
-      for (size_t y = 0; y < robotsJoueurs.size(); ++y) {
-         if ( i == robotsJoueurs.at(y).getOrdonnee()){
-            ligneX.at(i) = (char)robotsJoueurs.at(y).getId();
-         }
-      }
-
-      ligneX += '|';
-      cout << ligneX << endl;
+   // Affichage des ID des robots
+   string ligneTerrain;
+   for(size_t i = 0; i < plateau.getHauteur(); ++i)
+   {
+      ligneTerrain += MUR_VERTICAL;
+      ligneTerrain += string(plateau.getLargeur(), ESPACE_VIDE);
+      ligneTerrain += MUR_VERTICAL;
+      ligneTerrain += '\n';
    }
-   cout << ligne0 << endl;
+
+   // Affichage de l'ID des robots
+   string ligneRobot = ligneTerrain;
+   for(const Robot& r : robotsJoueurs)
+   {
+      // Pour Y : On récupère la coordonnée Y puis on la multiplie à la large du
+      //          plateau + 3 (les deux bords ainsi que le '\n' après le mur
+      //          vertical de gauche).
+      // Pour X : On récupère la coordonnée X puis on fait plus 1 car il faut
+      //          prendre en compte le mur de gauche.
+      ligneRobot[(r.getOrdonnee()) * (plateau.getLargeur() + 3)
+                + r.getAbscisse() + 1] = DEPART_AFFICHAGE + r.getId();
+   }
+   cout << ligneRobot << bordureHorizontale;
 }
 
+//---------------------------------------------------------------
+
+bool deplacementEstAutorisee(const Plateau& plateau)
+{
+
+}
+
+//---------------------------------------------------------------
+
+void detruire(const Plateau& plateau)
+{
+
+}
+
+//---------------------------------------------------------------
+
+void prochainTour(const Plateau& plateau)
+{
+
+}

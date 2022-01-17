@@ -18,14 +18,18 @@
 
 #include <cstdlib>
 #include <iostream>
+
 #include "Survivor.h"
+#include "annexe.h"
+#include "Robot.h"
 
 using namespace std;
 
 int main()
 {
    Survivor jeu;
-   jeu.initialisationPartie();
+
+
 
    return EXIT_SUCCESS;
 }
