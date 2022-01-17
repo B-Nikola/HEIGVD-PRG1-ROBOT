@@ -36,6 +36,23 @@ Plateau(unsigned largeur, unsigned hauteur);
 // Méthode
 //---------------------------------------------------------------
 
+// Nom       : getAbscisse
+// But       : Cette fonction permet de récupérer la coordonnées x (il s'agit
+//             d'un getteur car la propriété "x" est privée).
+// Param     : / aucun paramètre
+// Return    : / void
+// Exception : / aucune exception
+   unsigned getHauteur() const;
+//---------------------------------------------------------------------------
+
+// Nom       : getOrdonnee
+// But       : Cette fonction permet de récupérer la coordonnées y (il s'agit
+//             d'un getteur car la propriété "y" est privée).
+// Param     : / aucun paramètre
+// Return    : / void
+// Exception : / aucune exception
+   unsigned getLargeur() const;
+
 private :
 //---------------------------------------------------------------
 // Paramètre privée

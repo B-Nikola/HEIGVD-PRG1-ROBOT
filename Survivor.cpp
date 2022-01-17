@@ -144,3 +144,32 @@ bool Survivor::estCoordonneeLibre(unsigned int x, unsigned int y) const
    }
    return true;
 }
+
+
+
+
+
+
+
+
+
+void Survivor::affichage(const Plateau& plateau)
+{
+   string ligne0(plateau.getLargeur()+2,'-');
+   cout << string (plateau.getLargeur()+2,'-') << endl;
+
+   for (size_t i = 0; i < plateau.getHauteur(); ++i) {
+      string ligneX = "|";
+      ligneX += string(creationPlateau().getLargeur(),' ');
+
+      for (size_t y = 0; i < robotsJoueurs.size(); ++i) {
+         if ( i == robotsJoueurs.at(y).getOrdonnee()){
+            ligneX.at(i) = (char)robotsJoueurs.at(y).getId();
+         }
+         ligneX += '|';
+      }
+      cout << ligneX << endl;
+   }
+   cout << ligne0 << endl;
+}
+

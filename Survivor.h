@@ -98,6 +98,14 @@ bool estCoordonneeLibre(unsigned x, unsigned y) const;
 
 //---------------------------------------------------------------------------
 
+// Nom       : creationRobots
+// But       : Cette fonction permet de créer des objets de type robot et de les
+//             initialiser avec des coordonnées différentes.
+// Param     : / aucun paramètre
+// Return    : / void
+// Exception : Le vecteur mit à jour est un paramètre privé de la classe Survivor
+   void affichage(const Plateau& plateau);
+
 };
 
 #endif //SURVIVOR_H
