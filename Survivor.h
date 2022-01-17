@@ -19,10 +19,10 @@
 #ifndef SURVIVOR_H
 #define SURVIVOR_H
 
-#include <vector>      // Permet l'utilsation de vecteur
+#include <vector>    // Permet l'utilsation de vecteur
 
 #include "Plateau.h" // Le jeu Survivor à besoins d'un plateau
-#include "Robot.h"     // Les joueurs du Survivor sont des robots autonomes
+#include "Robot.h"   // Les joueurs du Survivor sont des robots autonomes
 
 class Survivor {
 public :
@@ -49,7 +49,7 @@ std::vector<Robot> robotsJoueurs;
 //---------------------------------------------------------------
 // Méthode privée
 //---------------------------------------------------------------
-
+public:
 // Nom       : InitialisationPartie
 // But       : Cette fonction permet d'initialiser la partie. En outre, elle
 //             permet de créer le plateau de jeu ainsi que le nombre de
@@ -58,7 +58,7 @@ std::vector<Robot> robotsJoueurs;
 // Param     : / aucun paramètre
 // Return    : / void
 // Exception : / aucune exception
-   void initialisationPartie();
+void initialisationPartie();
 //---------------------------------------------------------------------------
 
 // Nom       : ExplicationJeu
@@ -66,7 +66,7 @@ std::vector<Robot> robotsJoueurs;
 // Param     : / aucun paramètre
 // Return    : / void
 // Exception : / aucune exception
-   void explicationJeu();
+void explicationJeu();
 //---------------------------------------------------------------------------
 
 // Nom       : ExplicationJeu
@@ -74,7 +74,7 @@ std::vector<Robot> robotsJoueurs;
 // Param     : / aucun paramètre
 // Return    : / void
 // Exception : / aucune exception
-Plateau& creationPlateau();
+Plateau creationPlateau();
 //---------------------------------------------------------------------------
 
 // Nom       : creationRobots
@@ -83,7 +83,7 @@ Plateau& creationPlateau();
 // Param     : / aucun paramètre
 // Return    : / void
 // Exception : Le vecteur mit à jour est un paramètre privé de la classe Survivor
-void creationRobots();
+void creationRobots(const Plateau& plateau);
 //---------------------------------------------------------------------------
 
 // Nom       : estCoordonneeLibre
@@ -104,7 +104,8 @@ bool estCoordonneeLibre(unsigned x, unsigned y) const;
 // Param     : / aucun paramètre
 // Return    : / void
 // Exception : Le vecteur mit à jour est un paramètre privé de la classe Survivor
-   void affichage(const Plateau& plateau);
+void affichage(const Plateau& plateau);
+//---------------------------------------------------------------------------
 
 };
 

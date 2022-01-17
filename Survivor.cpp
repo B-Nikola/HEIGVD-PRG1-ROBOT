@@ -31,9 +31,9 @@ using namespace std;
 // Messages à afficher (français)
 //---------------------------------------------------------------
 const string TITRE              = "Survivor",
-             DESCRIPTION        = "Ce programme simule un jeu de survie joué par des "
-                                  "robots autonomes. Pour survire, ils doivent détruire "
-                                  "les autres robots. Le dernier gagne.",
+             DESCRIPTION        = "Ce programme simule un jeu de survie joue par "
+                                  "des robots autonomes. Pour survire, ils doivent"
+                                  " detruire les autres robots. Le dernier gagne.",
              MSG_SAISIE_LARGEUR = "Veuillez saisir la largeur du plateau",
              MSG_SAISIE_HAUTEUR = "Veuillez saisir la hauteur du plateau",
              MSG_SAISIE_N_ROBOT = "Veuillez saisir le nombre de robots qui vont "
@@ -44,10 +44,11 @@ const string TITRE              = "Survivor",
 //---------------------------------------------------------------
 // Déclaration des constantes
 //---------------------------------------------------------------
-const int NBR_ROBOT_MIN = 1,
-          NBR_ROBOT_MAX = 9,
-          LARG_HAUT_MIN = 10,
-          LARG_HAUT_MAX = 1000;
+const int NBR_ROBOT_MIN   = 1,
+          NBR_ROBOT_MAX   = 9,
+          LARG_HAUT_MIN   = 10,
+          LARG_HAUT_MAX   = 1000,
+          ORIGINE_PLATEAU = 1;
 
 //---------------------------------------------------------------
 // Constructeur
@@ -73,11 +74,17 @@ Survivor::~Survivor() {}
 //---------------------------------------------------------------
 void Survivor::initialisationPartie()
 {
+   // Explication du jeu
+   explicationJeu();
+
    // Création du plateau de jeu
    Plateau plateauSurvivor = creationPlateau();
 
    // Création des robots qui vont jouer la partie
-   creationRobots();
+   creationRobots(plateauSurvivor);
+
+   // Affichage des robots sur le plateau
+   affichage(plateauSurvivor);
 }
 
 //---------------------------------------------------------------------------
@@ -92,7 +99,7 @@ void Survivor::explicationJeu()
 
 //---------------------------------------------------------------------------
 
-Plateau &Survivor::creationPlateau()
+Plateau Survivor::creationPlateau()
 {
    // Saisie utilisateur permettant de définir la largeur du plateau
    unsigned largeur = saisieUniqueControlee(LARG_HAUT_MIN,      LARG_HAUT_MAX,
@@ -109,7 +116,7 @@ Plateau &Survivor::creationPlateau()
 
 //---------------------------------------------------------------------------
 
-void Survivor::creationRobots()
+void Survivor::creationRobots(const Plateau& plateau)
 {
    // Saisie utilisateur permettant de définir le nombre robots joueueurs
    unsigned nbrRobots = saisieUniqueControlee(NBR_ROBOT_MIN,       NBR_ROBOT_MAX,
@@ -118,8 +125,8 @@ void Survivor::creationRobots()
    // Création des robots et initialisation des robots
    for(size_t i = 0; i < nbrRobots; ++i)
    {
-      unsigned x = genereChiffreAleatoire(LARG_HAUT_MIN,LARG_HAUT_MAX);
-      unsigned y = genereChiffreAleatoire(LARG_HAUT_MIN,LARG_HAUT_MAX);
+      unsigned x = genereChiffreAleatoire(ORIGINE_PLATEAU,plateau.getLargeur());
+      unsigned y = genereChiffreAleatoire(ORIGINE_PLATEAU,plateau.getHauteur());
 
       while(!estCoordonneeLibre(x, y))
       {
@@ -145,29 +152,24 @@ bool Survivor::estCoordonneeLibre(unsigned int x, unsigned int y) const
    return true;
 }
 
-
-
-
-
-
-
-
+//---------------------------------------------------------------
 
 void Survivor::affichage(const Plateau& plateau)
 {
    string ligne0(plateau.getLargeur()+2,'-');
-   cout << string (plateau.getLargeur()+2,'-') << endl;
+   cout << ligne0 << endl;
 
    for (size_t i = 0; i < plateau.getHauteur(); ++i) {
       string ligneX = "|";
-      ligneX += string(creationPlateau().getLargeur(),' ');
+      ligneX += string(plateau.getLargeur(),' ');
 
-      for (size_t y = 0; i < robotsJoueurs.size(); ++i) {
+      for (size_t y = 0; y < robotsJoueurs.size(); ++y) {
          if ( i == robotsJoueurs.at(y).getOrdonnee()){
             ligneX.at(i) = (char)robotsJoueurs.at(y).getId();
          }
-         ligneX += '|';
       }
+
+      ligneX += '|';
       cout << ligneX << endl;
    }
    cout << ligne0 << endl;

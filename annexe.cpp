@@ -43,7 +43,7 @@ int genereChiffreAleatoire(int min, int max)
    }
 
    // Génération du caractère
-   return rand() % (max - min) + min;
+   return rand() % max + min;
 }
 
 //---------------------------------------------------------------------------
