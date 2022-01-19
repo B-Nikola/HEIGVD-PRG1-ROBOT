@@ -18,6 +18,8 @@
 
 #include <string>     // Permet l'utilisation de strings
 #include <iostream>   // Permet d'afficher et de lire sur la console
+#include <algorithm>  // Permet de faciliter l'utilisation de vecteur
+#include <thread>     //Permet de faire des pauses dans le programme
 
 #include "Survivor.h" // Classe Permettant de générer une partie du jeu Survivor
 #include "Plateau.h"  // Classe permettant de créer un plateau de jeu
@@ -39,6 +41,7 @@ const string TITRE              = "Survivor",
              MSG_SAISIE_N_ROBOT = "Veuillez saisir le nombre de robots",
              MSG_ERREUR         = "Erreur de saisie...",
              MSG_FIN_PROGRAMME  = "Appuyez sur ENTREE pour quitter le programme.";
+string debug;
 
 //---------------------------------------------------------------
 // Déclaration des constantes
@@ -84,7 +87,22 @@ void Survivor::initialisationPartie()
 
    // Affichage des robots sur le plateau
    affichage(plateauSurvivor);
+
+
+   while(robotsJoueurs.size() != 1) {
+      for (int j = 0; j < robotsJoueurs.size() ; ++j) {
+         deplacement(plateauSurvivor,robotsJoueurs.at(j));
+         destruction(robotsJoueurs.at(j));
+      }
+      affichage(plateauSurvivor);
+
+
+      std::this_thread::sleep_for (std::chrono::milliseconds(500));
+   }
+
 }
+
+
 
 //---------------------------------------------------------------------------
 
@@ -204,7 +222,8 @@ void Survivor::affichage(const Plateau& plateau)
 
 //---------------------------------------------------------------
 
-bool deplacementEstAutorisee(const Plateau& plateau)
+
+bool deplacementEstAutorisee(const Plateau& plateau, const Robot robot)
 {
 
 }
@@ -220,5 +239,57 @@ void detruire(const Plateau& plateau)
 
 void prochainTour(const Plateau& plateau)
 {
+
+}
+
+
+//---------------------------------------------------------------
+
+/*
+ * Plusto que d'autoriser je pense limiter avant le deplacement pour qu'il aie
+ * seulement dans une des directions que l'on souhaite
+ * Peut être la rendre privée a la classe ?
+ * */
+void Survivor::deplacement(const Plateau& plateau,  Robot& robot){
+   const int DECALAGEAFFICHAGE = 1;
+      int x = genereChiffreAleatoire(Robot::Deplacement::HAUT,
+                                       Robot::Deplacement::DROITE);
+
+   while(   (x == Robot::Deplacement::HAUT
+            and robot.getOrdonnee() == 0)
+         or
+            (x == Robot::Deplacement::BAS
+            and robot.getOrdonnee() == plateau.getHauteur() - DECALAGEAFFICHAGE)
+         or
+            (x == Robot::Deplacement::GAUCHE
+            and robot.getAbscisse() == 0)
+         or
+            (x == Robot::Deplacement::DROITE
+            and robot.getAbscisse() == plateau.getHauteur() - DECALAGEAFFICHAGE)
+         ){
+      x = genereChiffreAleatoire(Robot::Deplacement::HAUT,
+                                 Robot::Deplacement::DROITE);
+   }
+   robot.deplacer(Robot::Deplacement(x));
+}
+
+
+void Survivor::destruction(const Robot& robot) {
+   for (size_t i = 0; i < robotsJoueurs.size(); ++i) {
+      if (robot.getId() == robotsJoueurs.at(i).getId()){
+         continue;
+      }
+      if (robot.getAbscisse() == robotsJoueurs.at(i).getAbscisse()
+          and robot.getOrdonnee() == robotsJoueurs.at(i).getOrdonnee() )
+      {
+         //La fonction emplace et emplace
+         robotsJoueurs.emplace(robotsJoueurs.begin()+i,
+                              Robot(robotsJoueurs.back()));
+         robotsJoueurs.pop_back();
+         cout << "robot " << robot.getId() << " a mange " << robotsJoueurs.at(i).getId()<< endl;
+      }
+   }
+
+
 
 }

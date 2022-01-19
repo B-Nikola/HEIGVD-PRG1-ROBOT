@@ -116,7 +116,7 @@ void affichage(const Plateau& plateau);
 // Exception        : Lorsqu'un robot se trouve à côter d'un bord et qu'il se
 //                    déplace contre ce bord, il doit corriger son déplacement et se
 //                    déplacer dans la direction oposée
-bool deplacementEstAutorisee(const Plateau& plateau);
+bool deplacementEstAutorisee(const Plateau& plateau, const Robot robot);
 //---------------------------------------------------------------------------
 
 // Nom              : detruire
@@ -138,6 +138,19 @@ void detruire(const Plateau& plateau);
 // Exception        : / aucune exception
 void prochainTour(const Plateau& plateau);
 //---------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+
+// Nom              : deplacement
+// But              : Cette fonction permet de déplacer un robot en vérifiant au
+//                    préalable les directions dans les quels il peut se diriger.
+// Param plateau    : Plateau de jeu
+// Param robot      : Robot qui se déplace
+// Return           : void
+// Exception        : / aucune exception
+   void deplacement(const Plateau& plateau, Robot& robot);
+
+   void destruction(const Robot& robot);
 
 };
 

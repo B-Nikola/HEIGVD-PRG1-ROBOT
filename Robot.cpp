@@ -39,6 +39,17 @@ Robot::Robot(unsigned x, unsigned y) : x(x), y(y), id(next)
    ++next;
    ++total;
 }
+/*
+//---------------------------------------------------------------
+// Constructeur par copie
+//---------------------------------------------------------------
+Robot::Robot(Robot& robot) :  id(robot.id)
+{
+   this->x = robot.x;
+   this->y = robot.y;
+   ++total;
+}
+*/
 
 //---------------------------------------------------------------
 // Destructeur
@@ -54,6 +65,15 @@ Robot::~Robot()
 void Robot::deplacer(Deplacement direction)
 {
 
+   /*
+    * bas gauche
+    * bas droite
+    * libre
+    * haut gauche
+    * haut droite
+    * Si X >= limiteX ou X<=0 ou Y<=0 ou Y>=limiteY en dehors
+    *
+    * */
    switch (direction)
    {
 
@@ -105,3 +125,11 @@ unsigned int Robot::getId() const
 }
 
 //---------------------------------------------------------------------------
+// empeche pas la compilation
+Robot& Robot::operator=(const Robot& robAutre) {
+   if (this == &robAutre) {
+      return *this;
+   }
+   this->x  = robAutre.x;
+   this->y  = robAutre.y;
+}

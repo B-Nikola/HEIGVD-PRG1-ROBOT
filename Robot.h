@@ -21,16 +21,23 @@
 #define ROBOT_H
 
 class Robot {
-//---------------------------------------------------------------
-// Enum
-//---------------------------------------------------------------
-enum Deplacement {HAUT, BAS, GAUCHE, DROITE};
 
 public :
 //---------------------------------------------------------------
+// Enum
+// nécéssaire pour gérer les déplacements
+//---------------------------------------------------------------
+   enum Deplacement {HAUT, BAS, GAUCHE, DROITE};
+
+
+//---------------------------------------------------------------
 // Constructeur
 //---------------------------------------------------------------
-Robot(unsigned x, unsigned y);
+   Robot(unsigned x, unsigned y);
+
+   //constructeur par copie (pour destruction)
+   //Robot(Robot& robot);
+
 
 //---------------------------------------------------------------
 // Destructeur
@@ -76,6 +83,13 @@ unsigned getOrdonnee() const;
 // Exception : / aucune exception
 unsigned getId() const;
 //---------------------------------------------------------------------------
+
+// Nom       : surcharge opérateur =
+// But       : Pouvoir copier un robot
+// Param     : robot du quel il faut copié les paramètres
+// Return    : Le robot avec les nouvelles valeurs
+// Exception : / aucune exception
+   Robot& operator=(const Robot& robot);
 
 private:
 //---------------------------------------------------------------
