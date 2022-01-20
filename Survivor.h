@@ -107,38 +107,6 @@ bool estCoordonneeLibre(unsigned  x, unsigned  y) const;
 void affichage(const Plateau& plateau);
 //---------------------------------------------------------------------------
 
-// Nom              : deplacementEstAutorisee
-// But              : Cette fonction permet de s'assurer qu'un robot se déplace
-//                    sur un position (x ,y) autorisée.
-// Param plateau    : Plateau de jeu
-// Return           : booléen indiquant que le déplacement effectué par le robot
-//                    est autorisé
-// Exception        : Lorsqu'un robot se trouve à côter d'un bord et qu'il se
-//                    déplace contre ce bord, il doit corriger son déplacement et se
-//                    déplacer dans la direction oposée
-bool deplacementEstAutorisee(const Plateau& plateau, const Robot robot);
-//---------------------------------------------------------------------------
-
-// Nom              : detruire
-// But              : Cette fonction permet de définir comment les robots se font
-//                    détruire. Lorsqu'un robot se déplace sur une case et qu'un
-//                    autre robot se situe sur cette dernière, le robot qui s'est
-//                    déplacé détruit l'autre.
-// Param plateau    : Plateau de jeu
-// Return           : / void
-// Exception        : / aucune exception
-void detruire(const Plateau& plateau);
-//---------------------------------------------------------------------------
-
-// Nom              : prochainTour
-// But              : Cette fonction permet de jouer le prochain tour. Tous les
-//                    robots vont se déplacer et se manger entre eux si possible
-// Param plateau    : Plateau de jeu
-// Return           : / void
-// Exception        : / aucune exception
-void prochainTour(const Plateau& plateau);
-//---------------------------------------------------------------------------
-
 //---------------------------------------------------------------------------
 
 // Nom              : deplacement

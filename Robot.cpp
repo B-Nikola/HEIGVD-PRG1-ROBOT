@@ -39,17 +39,6 @@ Robot::Robot(unsigned x, unsigned y) : x(x), y(y), id(next)
    ++next;
    ++total;
 }
-/*
-//---------------------------------------------------------------
-// Constructeur par copie
-//---------------------------------------------------------------
-Robot::Robot(Robot& robot) :  id(robot.id)
-{
-   this->x = robot.x;
-   this->y = robot.y;
-   ++total;
-}
-*/
 
 //---------------------------------------------------------------
 // Destructeur
@@ -125,11 +114,20 @@ unsigned int Robot::getId() const
 }
 
 //---------------------------------------------------------------------------
-// empeche pas la compilation
+
 Robot& Robot::operator=(const Robot& robAutre) {
    if (this == &robAutre) {
       return *this;
    }
    this->x  = robAutre.x;
    this->y  = robAutre.y;
+
+   const unsigned *ptr = &this->id;
+   unsigned *ptemp = (unsigned*)ptr;
+   *ptemp = robAutre.getId();
+
+}
+
+bool Robot::operator==(const Robot& robAutre) {
+   return (this->x  == robAutre.x and  this->y  == robAutre.y);
 }

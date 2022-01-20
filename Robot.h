@@ -27,17 +27,13 @@ public :
 // Enum
 // nécéssaire pour gérer les déplacements
 //---------------------------------------------------------------
-   enum Deplacement {HAUT, BAS, GAUCHE, DROITE};
+enum Deplacement {HAUT, BAS, GAUCHE, DROITE};
 
 
 //---------------------------------------------------------------
 // Constructeur
 //---------------------------------------------------------------
-   Robot(unsigned x, unsigned y);
-
-   //constructeur par copie (pour destruction)
-   //Robot(Robot& robot);
-
+Robot(unsigned x, unsigned y);
 
 //---------------------------------------------------------------
 // Destructeur
@@ -89,7 +85,14 @@ unsigned getId() const;
 // Param     : robot du quel il faut copié les paramètres
 // Return    : Le robot avec les nouvelles valeurs
 // Exception : / aucune exception
-   Robot& operator=(const Robot& robot);
+Robot& operator=(const Robot& robot);
+
+// Nom       : surcharge opérateur ==
+// But       : Pouvoir copier un robot
+// Param     : robot du quel il faut copié les paramètres
+// Return    : Le robot avec les nouvelles valeurs
+// Exception : / aucune exception
+   bool operator==(const Robot& robot);
 
 private:
 //---------------------------------------------------------------

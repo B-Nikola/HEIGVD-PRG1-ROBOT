@@ -90,14 +90,15 @@ void Survivor::initialisationPartie()
 
 
    while(robotsJoueurs.size() != 1) {
+      system("cls");
+
       for (int j = 0; j < robotsJoueurs.size() ; ++j) {
          deplacement(plateauSurvivor,robotsJoueurs.at(j));
          destruction(robotsJoueurs.at(j));
       }
       affichage(plateauSurvivor);
 
-
-      std::this_thread::sleep_for (std::chrono::milliseconds(500));
+      std::this_thread::sleep_for (std::chrono::seconds(1));
    }
 
 }
@@ -222,34 +223,6 @@ void Survivor::affichage(const Plateau& plateau)
 
 //---------------------------------------------------------------
 
-
-bool deplacementEstAutorisee(const Plateau& plateau, const Robot robot)
-{
-
-}
-
-//---------------------------------------------------------------
-
-void detruire(const Plateau& plateau)
-{
-
-}
-
-//---------------------------------------------------------------
-
-void prochainTour(const Plateau& plateau)
-{
-
-}
-
-
-//---------------------------------------------------------------
-
-/*
- * Plusto que d'autoriser je pense limiter avant le deplacement pour qu'il aie
- * seulement dans une des directions que l'on souhaite
- * Peut être la rendre privée a la classe ?
- * */
 void Survivor::deplacement(const Plateau& plateau,  Robot& robot){
    const int DECALAGEAFFICHAGE = 1;
       int x = genereChiffreAleatoire(Robot::Deplacement::HAUT,
@@ -279,17 +252,9 @@ void Survivor::destruction(const Robot& robot) {
       if (robot.getId() == robotsJoueurs.at(i).getId()){
          continue;
       }
-      if (robot.getAbscisse() == robotsJoueurs.at(i).getAbscisse()
-          and robot.getOrdonnee() == robotsJoueurs.at(i).getOrdonnee() )
+      if (robot == robotsJoueurs.at(i))
       {
-         //La fonction emplace et emplace
-         robotsJoueurs.emplace(robotsJoueurs.begin()+i,
-                              Robot(robotsJoueurs.back()));
-         robotsJoueurs.pop_back();
-         cout << "robot " << robot.getId() << " a mange " << robotsJoueurs.at(i).getId()<< endl;
+         robotsJoueurs.erase(robotsJoueurs.begin()+i);
       }
    }
-
-
-
 }
