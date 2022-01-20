@@ -22,7 +22,6 @@
 #include <thread>     //Permet de faire des pauses dans le programme
 
 #include "Survivor.h" // Classe Permettant de générer une partie du jeu Survivor
-#include "Plateau.h"  // Classe permettant de créer un plateau de jeu
 
 #include "saisie.h"   // bibliothèque possédant une fonction de saisie contrôlée
 #include "annexe.h"   // bibliothèque possédant diverses fonctions annexes
@@ -41,24 +40,28 @@ const string TITRE              = "Survivor",
              MSG_SAISIE_N_ROBOT = "Veuillez saisir le nombre de robots",
              MSG_ERREUR         = "Erreur de saisie...",
              MSG_FIN_PROGRAMME  = "Appuyez sur ENTREE pour quitter le programme.";
-string debug;
 
 //---------------------------------------------------------------
 // Déclaration des constantes
 //---------------------------------------------------------------
-const int NBR_ROBOT_MIN   = 1,
-          NBR_ROBOT_MAX   = 9,
-          LARG_HAUT_MIN   = 10,
-          LARG_HAUT_MAX   = 1000,
-          ORIGINE_PLATEAU = 0;
+const int  NBR_ROBOT_MIN    = 1,
+           NBR_ROBOT_MAX    = 9,
+           LARG_HAUT_MIN    = 10,
+           LARG_HAUT_MAX    = 1000,
+           ORIGINE_PLATEAU  = 0,
+           BORD             = 1,
+           DEPART_AFFICHAGE = '0',       // Permet d'afficher l'ID
+           DECALAGE_MUR     = 2;         // Permet d'avoir des murs
+                                         // perpendiculaires
+
+const char MUR_HORIZONTAL   = '-',       // Bordure supéreiure et inféreieure
+           MUR_VERTICAL     = '|',       // Bordure latérale
+           ESPACE_VIDE      = ' ';       // Affiche un espace vide (pas de robots)
 
 //---------------------------------------------------------------
 // Constructeur
 //---------------------------------------------------------------
-Survivor::Survivor()
-{
-   initialisationPartie();
-}
+Survivor::Survivor() {}
 
 //---------------------------------------------------------------
 // Destructeur
@@ -68,13 +71,7 @@ Survivor::~Survivor() {}
 //---------------------------------------------------------------
 // Méthode public
 //---------------------------------------------------------------
-
-//---------------------------------------------------------------------------
-
-//---------------------------------------------------------------
-// Méthode privée
-//---------------------------------------------------------------
-void Survivor::initialisationPartie()
+void Survivor::start()
 {
    // Explication du jeu
    explicationJeu();
@@ -88,25 +85,13 @@ void Survivor::initialisationPartie()
    // Affichage des robots sur le plateau
    affichage(plateauSurvivor);
 
-
-   while(robotsJoueurs.size() != 1) {
-      system("cls");
-
-      for (int j = 0; j < robotsJoueurs.size() ; ++j) {
-         deplacement(plateauSurvivor,robotsJoueurs.at(j));
-         destruction(robotsJoueurs.at(j));
-      }
-      affichage(plateauSurvivor);
-
-      std::this_thread::sleep_for (std::chrono::seconds(1));
-   }
-
+   // Permet de jouer la partie
+   jouerPartie(plateauSurvivor);
 }
 
-
-
-//---------------------------------------------------------------------------
-
+//---------------------------------------------------------------
+// Méthode privée
+//---------------------------------------------------------------
 void Survivor::explicationJeu()
 {
    cout << endl   // Permet plus de lisibilité dans la console
@@ -136,9 +121,6 @@ Plateau Survivor::creationPlateau()
 
 void Survivor::creationRobots(const Plateau& plateau)
 {
-   // Déclaration d'une constante
-   const unsigned BORD = 1;
-
    // Saisie utilisateur permettant de définir le nombre robots joueueurs
    unsigned nbrRobots = saisieUniqueControlee(NBR_ROBOT_MIN,       NBR_ROBOT_MAX,
                                               MSG_SAISIE_N_ROBOT, MSG_ERREUR);
@@ -183,14 +165,7 @@ bool Survivor::estCoordonneeLibre(unsigned  x, unsigned  y) const
 
 void Survivor::affichage(const Plateau& plateau)
 {
-   // Déclaration de constantes
-   const int           DEPART_AFFICHAGE = '0'; // Permet d'afficher l'ID
-   const unsigned char MUR_HORIZONTAL   = '-'; // Bordure supéreiure et inféreieure
-   const unsigned char MUR_VERTICAL     = '|'; // Bordure latérale
-   const unsigned char ESPACE_VIDE      = ' '; // Affiche un espace vide (pas de
-                                               // robots)
-   const unsigned      DECALAGE_MUR     = 2;   // Permet d'avoir des murs
-                                               // perpendiculaires
+   system("cls");
 
    // Permet d'afficher le terrain sans les robots
    string bordureHorizontale(plateau.getLargeur() + DECALAGE_MUR,MUR_HORIZONTAL);
@@ -219,42 +194,65 @@ void Survivor::affichage(const Plateau& plateau)
                 + r.getAbscisse() + 1] = DEPART_AFFICHAGE + r.getId();
    }
    cout << ligneRobot << bordureHorizontale;
+   std::this_thread::sleep_for (std::chrono::seconds(1));
 }
 
 //---------------------------------------------------------------
 
-void Survivor::deplacement(const Plateau& plateau,  Robot& robot){
-   const int DECALAGEAFFICHAGE = 1;
-      int x = genereChiffreAleatoire(Robot::Deplacement::HAUT,
-                                       Robot::Deplacement::DROITE);
+void Survivor::deplacement(const Plateau& plateau,  Robot& robot)
+{
+   const int DECALAGE_AFFICHAGE = 1;
+   int       direction = genereChiffreAleatoire(Robot::Deplacement::HAUT,
+                                                Robot::Deplacement::DROITE);
 
-   while(   (x == Robot::Deplacement::HAUT
+   while((direction == Robot::Deplacement::HAUT
             and robot.getOrdonnee() == 0)
          or
-            (x == Robot::Deplacement::BAS
-            and robot.getOrdonnee() == plateau.getHauteur() - DECALAGEAFFICHAGE)
+            (direction == Robot::Deplacement::BAS
+            and robot.getOrdonnee() == plateau.getHauteur() - DECALAGE_AFFICHAGE)
          or
-            (x == Robot::Deplacement::GAUCHE
+            (direction == Robot::Deplacement::GAUCHE
             and robot.getAbscisse() == 0)
          or
-            (x == Robot::Deplacement::DROITE
-            and robot.getAbscisse() == plateau.getHauteur() - DECALAGEAFFICHAGE)
+            (direction == Robot::Deplacement::DROITE
+            and robot.getAbscisse() == plateau.getHauteur() - DECALAGE_AFFICHAGE)
          ){
-      x = genereChiffreAleatoire(Robot::Deplacement::HAUT,
-                                 Robot::Deplacement::DROITE);
+      direction = genereChiffreAleatoire(Robot::Deplacement::HAUT,
+                                         Robot::Deplacement::DROITE);
    }
-   robot.deplacer(Robot::Deplacement(x));
+   robot.deplacer(Robot::Deplacement(direction));
 }
 
+//---------------------------------------------------------------
 
-void Survivor::destruction(const Robot& robot) {
-   for (size_t i = 0; i < robotsJoueurs.size(); ++i) {
-      if (robot.getId() == robotsJoueurs.at(i).getId()){
+void Survivor::destruction(const Robot& robot)
+{
+   for (size_t i = 0; i < robotsJoueurs.size(); ++i)
+   {
+      if (robot.getId() == robotsJoueurs.at(i).getId())
+      {
          continue;
       }
+
       if (robot == robotsJoueurs.at(i))
       {
-         robotsJoueurs.erase(robotsJoueurs.begin()+i);
+         robotsJoueurs.erase(robotsJoueurs.begin() + i);
       }
+   }
+}
+
+//---------------------------------------------------------------
+
+void Survivor::jouerPartie(const Plateau& plateauSurvivor)
+{
+   while(robotsJoueurs.size() != 1)
+   {
+      for (int j = 0; j < robotsJoueurs.size() ; ++j)
+      {
+         deplacement(plateauSurvivor,robotsJoueurs.at(j));
+         destruction(robotsJoueurs.at(j));
+      }
+
+      affichage(plateauSurvivor);
    }
 }

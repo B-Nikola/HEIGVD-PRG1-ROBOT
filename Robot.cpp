@@ -49,20 +49,10 @@ Robot::~Robot()
 }
 
 //---------------------------------------------------------------
-// Méthode
+// Méthode publique
 //---------------------------------------------------------------
 void Robot::deplacer(Deplacement direction)
 {
-
-   /*
-    * bas gauche
-    * bas droite
-    * libre
-    * haut gauche
-    * haut droite
-    * Si X >= limiteX ou X<=0 ou Y<=0 ou Y>=limiteY en dehors
-    *
-    * */
    switch (direction)
    {
 
@@ -115,19 +105,21 @@ unsigned int Robot::getId() const
 
 //---------------------------------------------------------------------------
 
-Robot& Robot::operator=(const Robot& robAutre) {
-   if (this == &robAutre) {
-      return *this;
-   }
-   this->x  = robAutre.x;
-   this->y  = robAutre.y;
+Robot& Robot::operator=(const Robot& robAutre)
+{
+   x  = robAutre.x;
+   y  = robAutre.y;
 
    const unsigned *ptr = &this->id;
    unsigned *ptemp = (unsigned*)ptr;
-   *ptemp = robAutre.getId();
 
+   *ptemp = robAutre.getId();
+   return *this;
 }
 
-bool Robot::operator==(const Robot& robAutre) {
-   return (this->x  == robAutre.x and  this->y  == robAutre.y);
+//---------------------------------------------------------------------------
+
+bool Robot::operator==(const Robot& robAutre)
+{
+   return x == robAutre.x and  y  == robAutre.y;
 }

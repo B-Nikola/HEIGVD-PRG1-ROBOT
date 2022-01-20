@@ -40,6 +40,16 @@ Survivor();
 // Méthode publique
 //---------------------------------------------------------------
 
+// Nom       : start
+// But       : Cette fonction permet de démarrer, initiliaser et jouer une partie
+//             du jeu Survivor.
+// Param     : / aucun paramètre
+// Return    : / void
+// Exception : / aucune exception
+void start();
+//---------------------------------------------------------------
+
+
 private :
 //---------------------------------------------------------------
 // Paramètre privée
@@ -49,17 +59,6 @@ std::vector<Robot> robotsJoueurs;
 //---------------------------------------------------------------
 // Méthode privée
 //---------------------------------------------------------------
-
-// Nom       : InitialisationPartie
-// But       : Cette fonction permet d'initialiser la partie. En outre, elle
-//             permet de créer le plateau de jeu ainsi que le nombre de
-//             robots participant à la partie. De plus, elle à pour but de
-//             placer les robots sur le plateau de manière aléatoire.
-// Param     : / aucun paramètre
-// Return    : / void
-// Exception : / aucune exception
-void initialisationPartie();
-//---------------------------------------------------------------------------
 
 // Nom       : ExplicationJeu
 // But       : Cette fonction permet d'expliquer le but du jeu Survivor
@@ -95,7 +94,6 @@ void creationRobots(const Plateau& plateau);
 //             coordonnées.
 // Exception : / aucune exception
 bool estCoordonneeLibre(unsigned  x, unsigned  y) const;
-
 //---------------------------------------------------------------------------
 
 // Nom       : creationRobots
@@ -107,8 +105,6 @@ bool estCoordonneeLibre(unsigned  x, unsigned  y) const;
 void affichage(const Plateau& plateau);
 //---------------------------------------------------------------------------
 
-//---------------------------------------------------------------------------
-
 // Nom              : deplacement
 // But              : Cette fonction permet de déplacer un robot en vérifiant au
 //                    préalable les directions dans les quels il peut se diriger.
@@ -116,9 +112,29 @@ void affichage(const Plateau& plateau);
 // Param robot      : Robot qui se déplace
 // Return           : void
 // Exception        : / aucune exception
-   void deplacement(const Plateau& plateau, Robot& robot);
+void deplacement(const Plateau& plateau, Robot& robot);
+//---------------------------------------------------------------------------
 
-   void destruction(const Robot& robot);
+// Nom              : destruction
+// But              : Cette fonction permet de détruire les robots lorsqu'il se
+//                    chevauche.
+// Param robot      : Plateau de jeu
+// Param robot      : Robot uitliser pour effectuer la comparaison afin de savoir
+//                    si la destruction doit avoir lieu.
+// Return           : void
+// Exception        : / aucune exception
+void destruction(const Robot& robot);
+//---------------------------------------------------------------------------
+
+// Nom                   : tourDeJeu
+// But                   : Cette fonction permet d'effectuer un tour de jeu. Chaque
+//                         robot vont se déplacer. Si un robot se déplace sur une
+//                         case et qu'un autre robot se situe sur cette derière,
+//                         il est détuit.
+// Param plateauSurvivor : Plateau de jeu initialisé
+// Return                : void
+// Exception             : / aucune exception
+void jouerPartie(const Plateau& plateauSurvivor);
 
 };
 

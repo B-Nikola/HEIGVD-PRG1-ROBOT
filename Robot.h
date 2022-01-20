@@ -24,11 +24,9 @@ class Robot {
 
 public :
 //---------------------------------------------------------------
-// Enum
-// nécéssaire pour gérer les déplacements
+// Enum (nécessaire pour les déplacements)
 //---------------------------------------------------------------
 enum Deplacement {HAUT, BAS, GAUCHE, DROITE};
-
 
 //---------------------------------------------------------------
 // Constructeur
@@ -41,7 +39,7 @@ Robot(unsigned x, unsigned y);
 ~Robot();
 
 //---------------------------------------------------------------
-// Méthode
+// Méthode publique
 //---------------------------------------------------------------
 
 // Nom             : deplacer
@@ -86,13 +84,15 @@ unsigned getId() const;
 // Return    : Le robot avec les nouvelles valeurs
 // Exception : / aucune exception
 Robot& operator=(const Robot& robot);
+//---------------------------------------------------------------------------
 
 // Nom       : surcharge opérateur ==
 // But       : Pouvoir copier un robot
 // Param     : robot du quel il faut copié les paramètres
 // Return    : Le robot avec les nouvelles valeurs
 // Exception : / aucune exception
-   bool operator==(const Robot& robot);
+bool operator==(const Robot& robot);
+
 
 private:
 //---------------------------------------------------------------
