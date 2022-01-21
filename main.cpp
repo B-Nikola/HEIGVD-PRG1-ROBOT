@@ -16,9 +16,9 @@
  -----------------------------------------------------------------------------------
 */
 
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include <cstdlib>   // Nécessaire pour return EXIT_SUCCESS
+#include <iostream>  // Permet d'afficher et de lire sur la console
+#include <string>    // Permet l'utilisation de strings
 
 #include "Survivor.h"
 
