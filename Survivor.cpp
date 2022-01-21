@@ -18,7 +18,6 @@
 
 #include <string>     // Permet l'utilisation de strings
 #include <iostream>   // Permet d'afficher et de lire sur la console
-#include <algorithm>  // Permet de faciliter l'utilisation de vecteur
 #include <thread>     //Permet de faire des pauses dans le programme
 
 #include "Survivor.h" // Classe Permettant de générer une partie du jeu Survivor
