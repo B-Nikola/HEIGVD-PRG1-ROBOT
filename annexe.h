@@ -48,6 +48,5 @@ int genereChiffreAleatoire(int min, int max);
 // Return           : / void
 // Exception        : n/a
 void terminerProgramme(const std::string& msgFinProgramme);
-//---------------------------------------------------------------------------
 
 #endif //ANNEXE_H

@@ -35,6 +35,4 @@
 int saisieUniqueControlee(int borneInf, int borneSup, const std::string& msgSaisie,
                           const std::string& msgErreur);
 
-//---------------------------------------------------------------------------
-
 #endif //SAISIE_H

@@ -53,4 +53,3 @@ void terminerProgramme(const string& msgFinProgramme)
    cout << msgFinProgramme;
    viderBuffer();
 }
-//---------------------------------------------------------------------------
