@@ -17,15 +17,33 @@
 */
 
 #include <cstdlib>
+#include <iostream>
+#include <string>
 
 #include "Survivor.h"
+
+#include "annexe.h"
 
 using namespace std;
 
 int main()
 {
+//---------------------------------------------------------------
+// Messages à afficher (français)
+//---------------------------------------------------------------
+   const string MSG_FIN_PROGRAMME  = "Appuyez sur ENTREE pour quitter le programme.";
+
+//---------------------------------------------------------------
+// Création du jeu et déroulement de la partie
+//---------------------------------------------------------------
    Survivor jeu;
    jeu.start();
+
+//-------------------------------------------------------------------
+// Fin de programme
+//-------------------------------------------------------------------
+   cout << endl;     // Pour une lecture plus agréable dans la console
+   terminerProgramme(MSG_FIN_PROGRAMME);
 
    return EXIT_SUCCESS;
 }

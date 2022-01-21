@@ -38,8 +38,7 @@ const string TITRE              = "Survivor",
              MSG_SAISIE_LARGEUR = "Veuillez saisir la largeur du plateau",
              MSG_SAISIE_HAUTEUR = "Veuillez saisir la hauteur du plateau",
              MSG_SAISIE_N_ROBOT = "Veuillez saisir le nombre de robots",
-             MSG_ERREUR         = "Erreur de saisie...",
-             MSG_FIN_PROGRAMME  = "Appuyez sur ENTREE pour quitter le programme.";
+             MSG_ERREUR         = "Erreur de saisie...";
 
 //---------------------------------------------------------------
 // Déclaration des constantes
@@ -190,11 +189,11 @@ void Survivor::affichage(const Plateau& plateau)
       //          vertical de gauche).
       // Pour X : On récupère la coordonnée X puis on fait plus 1 car il faut
       //          prendre en compte le mur de gauche.
-      ligneRobot[(r.getOrdonnee()) * (plateau.getLargeur() + 3)
-                + r.getAbscisse() + 1] = DEPART_AFFICHAGE + r.getId();
+      ligneRobot.at((r.getOrdonnee()) * (plateau.getLargeur() + 3)
+                       + r.getAbscisse() + 1) = DEPART_AFFICHAGE + r.getId();
    }
    cout << ligneRobot << bordureHorizontale;
-   std::this_thread::sleep_for (std::chrono::seconds(1));
+   std::this_thread::sleep_for (std::chrono::milliseconds (500));
 }
 
 //---------------------------------------------------------------
